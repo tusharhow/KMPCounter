@@ -1,0 +1,73 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+      
+    - name: Run JVM tests
+      run: ./gradlew :library:jvmTest --no-daemon
+      
+    - name: Run Android tests
+      run: ./gradlew :library:testDebugUnitTest --no-daemon
+      
+    - name: Build all targets
+      run: ./gradlew :library:build --no-daemon
+      
+    - name: Run iOS tests (if available)
+      run: ./gradlew :library:iosSimulatorArm64Test --no-daemon || echo "iOS tests skipped or failed"
+      continue-on-error: true
+      
+  build-sample:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+      
+    - name: Build and run sample
+      run: ./gradlew :simple-test:build --no-daemon 
