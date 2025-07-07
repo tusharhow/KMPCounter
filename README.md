@@ -2,7 +2,7 @@
 
 # KMPCounter
 
-[![JitPack](https://jitpack.io/v/tusharahmed/KMPCounter.svg)](https://jitpack.io/#tusharahmed/KMPCounter)
+[![JitPack](https://jitpack.io/v/tusharhow/KMPCounter.svg)](https://jitpack.io/#tusharhow/KMPCounter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Kotlin Multiplatform library for formatting numbers into human-readable format. Convert numbers like `1000` to `"1K"`, `1200000` to `"1.2M"`, and so on.
@@ -51,7 +51,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.github.tusharahmed:KMPCounter:1.0.0")
+                implementation("com.github.tusharhow:KMPCounter:1.0.0")
             }
         }
     }
@@ -65,7 +65,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation 'com.github.tusharahmed:KMPCounter:1.0.0'
+                implementation 'com.github.tusharhow:KMPCounter:1.0.0'
             }
         }
     }

@@ -139,7 +139,7 @@ object KMPCounter {
     
     private fun formatDecimal(number: Double, precision: Int): String {
         if (precision == 0) {
-            return number.toLong().toString()
+            return round(number).toLong().toString()
         }
         
         val multiplier = when (precision) {
@@ -152,15 +152,30 @@ object KMPCounter {
         }
         
         val rounded = round(number * multiplier) / multiplier
-        val integerPart = rounded.toLong()
-        val fractionalPart = rounded - integerPart
         
-        if (fractionalPart == 0.0) {
-            return integerPart.toString()
+        // Convert to string with proper precision
+        val formatString = "%.${precision}f"
+        val result = rounded.toString()
+        
+        // Simple formatting approach
+        val parts = result.split('.')
+        val integerPart = parts[0]
+        
+        if (parts.size == 1 || precision == 0) {
+            return integerPart
         }
         
-        val fractionalString = (fractionalPart * multiplier).toLong().toString().padStart(precision, '0')
-        return "$integerPart.$fractionalString"
+        val fractionalPart = if (parts.size > 1) parts[1] else "0"
+        val paddedFractional = fractionalPart.take(precision).padEnd(precision, '0')
+        
+        // Remove trailing zeros
+        val trimmedFractional = paddedFractional.trimEnd('0')
+        
+        return if (trimmedFractional.isEmpty()) {
+            integerPart
+        } else {
+            "$integerPart.$trimmedFractional"
+        }
     }
 }
 

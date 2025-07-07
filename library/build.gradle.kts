@@ -82,7 +82,7 @@ publishing {
             pom {
                 name.set("KMPCounter")
                 description.set("A Kotlin Multiplatform library for formatting numbers in human-readable format (1K, 1.2M, etc.)")
-                url.set("https://github.com/tusharahmed/KMPCounter")
+                url.set("https://github.com/tusharhow/KMPCounter")
                 
                 licenses {
                     license {
@@ -95,14 +95,14 @@ publishing {
                     developer {
                         id.set("tusharhow")
                         name.set("Tushar Mahmud")
-                        url.set("https://github.com/tusharahmed")
+                        url.set("https://github.com/tusharhow")
                     }
                 }
                 
                 scm {
                     url.set("https://github.com/tusharhow/KMPCounter")
-                    connection.set("scm:git:git://github.com/tusharahmed/KMPCounter.git")
-                    developerConnection.set("scm:git:ssh://github.com:tusharahmed/KMPCounter.git")
+                    connection.set("scm:git:git://github.com/tusharhow/KMPCounter.git")
+                    developerConnection.set("scm:git:ssh://github.com:tusharhow/KMPCounter.git")
                 }
             }
         }
